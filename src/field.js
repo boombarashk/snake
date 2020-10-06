@@ -35,4 +35,8 @@ export class Field {
     gridCoord(value) {
         return value * STEP
     }
+
+    checkHitBorders({x, y}) {
+        return x === 0 || x === (this._grid.countX - 1) || y === 0 || y === (this._grid.countY - 1)
+    }
 }

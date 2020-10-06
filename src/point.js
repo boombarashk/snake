@@ -48,7 +48,8 @@ export class Point {
     }
 
     _clearPoint(){
-        this._field.ctx.clearRect(this._x, this._y, STEP, STEP)
+        this._field.ctx.fillStyle = 'white'
+        this._field.ctx.fillRect(this._x, this._y, STEP, STEP)
     }
 
     _drawCirclePoint() {

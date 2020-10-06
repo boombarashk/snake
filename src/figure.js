@@ -11,6 +11,10 @@ export class Figure{
         this._points = points
     }
 
+    get points() {
+        return this._points
+    }
+
     draw() {
         this._points.forEach( point => {
             new Point(this._field, point.x, point.y, this._fill).draw()
