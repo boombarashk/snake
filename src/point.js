@@ -54,8 +54,10 @@ export class Point {
 
     _drawCirclePoint() {
         const radius = Math.ceil(this._step / 2)
+        this._field.ctx.beginPath()
         this._field.ctx.arc(this._x + radius, this._y + radius, radius, 0, 360)
         this._field.ctx.fill()
+        this._field.ctx.closePath()
     }
 
     _drawSquarePoint(){

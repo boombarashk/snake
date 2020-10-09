@@ -1,17 +1,18 @@
 import { Point, FILLING} from "./point";
 import { Figure } from "./figure";
 
-const DIRECTION = {
-    RIGHT: 'right',
-    LEFT: 'left',
-    UP: 'up',
-    DOWN: 'down'
+export const DIRECTION = {
+    RIGHT: 'Right',
+    LEFT: 'Left',
+    UP: 'Up',
+    DOWN: 'Down'
 }
 
 export class Snake extends Figure {
     constructor(field, setOfPoint) {
-        super(field, setOfPoint)
+        super(field, FILLING.FILL)
         this._direction = DIRECTION.RIGHT
+        this.points = setOfPoint
         this.draw()
     }
 
@@ -31,8 +32,16 @@ export class Snake extends Figure {
         return false
     }
 
-    move() {
+    _eat(food, {x, y}) {
+        if (food.x === x && food.y === y) {
+            return true
+        }
+        return false
+    }
+
+    move(food) {
         let {x, y} = this._getHead()
+
         switch (this._direction) {
             case DIRECTION.RIGHT: x += 1; break
             case DIRECTION.LEFT: x -= 1; break
@@ -42,10 +51,16 @@ export class Snake extends Figure {
 
         if (!(this._field.checkHitBorders({x, y}) || this._checkHitSelf({x, y}))) {
             this.points.push({x, y})
-            new Point(this._field, x, y).draw()
 
-            // if not eat
-            this._clearTail()
+            const snakeEat = this._eat(food, {x, y})
+            if (snakeEat) {
+                this._field.addPoints()
+                food.clear()
+            } else {
+                this._clearTail()
+            }
+
+            new Point(this._field, x, y).draw()
         } else {
             return false
         }
@@ -53,7 +68,11 @@ export class Snake extends Figure {
         return true
     }
 
+    get direction() {
+        return this._direction
+    }
+
     set direction(value) {
-        this._direction = DIRECTION[value] || DIRECTION.RIGHT
+        this._direction = value || DIRECTION.RIGHT
     }
 }

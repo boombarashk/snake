@@ -2,8 +2,8 @@ import { Figure } from "./figure";
 import { FILLING } from "./point";
 
 export class Border extends Figure{
-    constructor(field, points = {}, fill){
-        super(field, points, fill)
+    constructor(field, fill){
+        super(field, fill)
         this.create(field, fill)
     }
 

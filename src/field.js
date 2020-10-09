@@ -2,6 +2,7 @@ import {STEP} from "./point";
 
 export class Field {
     constructor(element) {
+        this._score = 0
         this._width = 500
         this._height = 400
         this._ctx = this._create(element)
@@ -38,5 +39,17 @@ export class Field {
 
     checkHitBorders({x, y}) {
         return x === 0 || x === (this._grid.countX - 1) || y === 0 || y === (this._grid.countY - 1)
+    }
+
+    addPoints() {
+        this._score += 100
+    }
+
+    gameOver() {
+        localStorage.setItem('POINTS', this._score)
+        const textString = "Game Over"
+        this._ctx.font = "48px serif";
+        const text = this._ctx.measureText(textString)
+        this._ctx.fillText(textString, Math.round( this._width/2 - text.width / 2), Math.round(this._height/2));
     }
 }
